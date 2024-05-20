@@ -8,33 +8,33 @@ export const ApplyLoan = () => {
       <div className="flex justify-center pt-16 gap-10">
         <div className="w-6/12 bg-black border text-white p-4 flex flex-col justify-center ml-5">
           <form className="flex flex-col gap-8 text-white">
-            <div className="mb-6">
+            <div className="mb-6  w-[80%] place-self-center">
               <label htmlFor="loanType" className="block text-sm font-medium">
                 Select Loan:
               </label>
               <select
                 id="loanType"
                 name="loanType"
-                className="mt-1 block w-full rounded-md bg-[#4a081f] text-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200 hover:scale-105"
+                className="mt-1 block w-full  h-[40px] rounded-md bg-[#4a081f] text-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200 hover:scale-105"
               >
                 <option value="" disabled selected>E.j: Mortgage</option>
               </select>
             </div>
 
-            <div className="mb-6">
+            <div className="mb-6 w-[80%] place-self-center">
               <label htmlFor="accountOrigin" className="block text-sm font-medium">
                 Account Origin:
               </label>
               <select
                 id="accountOrigin"
                 name="accountOrigin"
-                className="mt-1 block w-full rounded-md bg-[#4a081f] text-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200 hover:scale-105"
+                className="mt-1 block w-full h-[40px] rounded-md bg-[#4a081f] text-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200 hover:scale-105"
               >
                 <option value="" disabled selected>E.j: VIN-001</option>
               </select>
             </div>
 
-            <div className="mb-6">
+            <div className="mb-6  w-[80%] place-self-center">
               <label htmlFor="amount" className="block text-sm font-medium">
                 Amount:
               </label>
@@ -43,18 +43,18 @@ export const ApplyLoan = () => {
                 id="amount"
                 name="amount"
                 placeholder="E.j: $250,000.00"
-                className="mt-1 block w-full rounded-md bg-[#4a081f] text-white border-gray-500 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200 hover:scale-105"
+                className="mt-1 block w-full  h-[40px] rounded-md bg-[#4a081f] text-white border-gray-500 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200 hover:scale-105"
               />
             </div>
 
-            <div className="mb-6">
+            <div className="mb-6  w-[80%] place-self-center">
               <label htmlFor="paymentType" className="block text-sm font-medium">
                 Payment:
               </label>
               <select
                 id="paymentType"
                 name="paymentType"
-                className="mt-1 block w-full rounded-md bg-[#4a081f] text-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200  hover:scale-105"
+                className="mt-1 block w-full  h-[40px] rounded-md bg-[#4a081f] text-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200  hover:scale-105"
               >
                 <option value="" disabled selected>E.j: 60 pays</option>
               </select>

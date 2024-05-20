@@ -9,8 +9,9 @@ function MainLayout({ children }) {
   return (
     <div className="flex flex-col h-screen">
       <Header />
-      <main className="bg-[#fc4b2a] pt-8 flex-grow">{children}
-      </main> 
+      <main className="bg-[#fc4b2a] pt-8 flex-grow">
+        {children}
+      </main>
       <Footer />
     </div>
   );

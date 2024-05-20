@@ -21,7 +21,7 @@ function Account() {
   return (
     <div>
       <Title text="Your selected account" />
-      <img src="/assets/account.jpeg" style={{ width: "60%" }} className="mx-auto pb-16" alt="Selected account" />
+      <img src="/assets/finanzas.jpeg" style={{ width: "60%" }} className="mx-auto pb-16" alt="Selected account" />
       <div className="w-[100%] relative pb-20">
         <button className='border absolute left-32 top-2 border-black rounded-3xl w-[250px] h-[70px] place-self-center bg-[#4a081f] text-white font-custom transition duration-300 ease-in-out hover:bg-black'>
           Request Account

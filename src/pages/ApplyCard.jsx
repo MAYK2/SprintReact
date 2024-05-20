@@ -30,7 +30,7 @@ export const ApplyCard = () => {
 
             <div className="flex justify-between">
               <button type="submit" className="w-[45%] bg-[#680e34] text-white py-2 px-4 rounded-md transition duration-300 ease-in-out hover:bg-[#280904] focus:outline-none focus:bg-[#280904]">Apply</button>
-              <button type="button" className="w-[45%] bg-[#fc4b2a] text-white py-2 px-4 rounded-md transition duration-300 ease-in-out hover:bg-[#9a151a] focus:outline-none focus:bg-[#9a151a]">Cancel</button>
+              <button type="button" className="w-[45%] bg-[#9a151a] text-white py-2 px-4 rounded-md transition duration-300 ease-in-out hover:bg-[#FF6961] focus:outline-none focus:bg-[#9a151a]">Cancel</button>
             </div>
           </form>
         </div>
