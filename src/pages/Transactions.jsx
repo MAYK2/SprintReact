@@ -1,80 +1,132 @@
-import React from 'react';
-import Title from '../components/Title';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
-export const ApplyLoan = () => {
+const MakeTransaction = () => {
+  const [accounts, setAccounts] = useState([]);
+  const [fromAccountNumber, setFromAccountNumber] = useState('');
+  const [toAccountNumber, setToAccountNumber] = useState('');
+  const [amount, setAmount] = useState('');
+  const [description, setDescription] = useState('');
+  const [message, setMessage] = useState('');
+  const token = useSelector(store => store.auth.token);
+
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/clients/current/accounts', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setAccounts(response.data);
+
+        // Set default fromAccountNumber to the first account's number
+        if (response.data.length > 0) {
+          setFromAccountNumber(response.data[0].number);
+        }
+      } catch (error) {
+        console.error('Error fetching accounts:', error);
+      }
+    };
+
+    if (token) {
+      fetchAccounts();
+    }
+  }, [token]);
+
+  const handleTransfer = async (e) => {
+    e.preventDefault();
+    const transferData = {
+      fromAccountNumber,
+      toAccountNumber,
+      amount: parseFloat(amount),
+      description,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:8080/api/transfer', transferData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setMessage('Transferencia exitosa');
+    } catch (error) {
+      setMessage('Transferencia fallida: ' + (error.response?.data || error.message));
+    }
+  };
+
   return (
-  <div>
-      <Title text="Apply for a loan" />
-      <div className="flex justify-center pt-16 gap-10">
-        <div className="w-6/12 bg-black border text-white p-4 flex flex-col justify-center ml-5">
-          <form className="flex flex-col gap-8 text-white">
-            <div className="mb-6  w-[80%] place-self-center">
-              <label htmlFor="loanType" className="block text-sm font-medium">
-                Select Loan:
-              </label>
+    <div>
+      <div className='flex items-center gap-16 justify-around'>
+        <section className='bg-black text-white w-[40%] h-[500px] mt-[50px] pr-16 font-custom'>
+          <form className='flex flex-col gap-12 pl-10' onSubmit={handleTransfer}>
+            <div className='flex justify-around pt-4'>
+              <p>Tipo de destino:</p>
+              <div className='flex gap-4'>
+                <label>Propio</label>
+                <input type='checkbox' className='w-6 h-6' />
+              </div>
+              <div className='flex gap-4'>
+                <label>Otros</label>
+                <input type='checkbox' className='w-6 h-6' />
+              </div>
+            </div>
+            <div>
+              <p>Cuenta de origen:</p>
               <select
-                id="loanType"
-                name="loanType"
-                className="mt-1 block w-full  h-[40px] rounded-md bg-[#4a081f] text-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200 hover:scale-105"
+                className='bg-[#4a081f] w-full p-2'
+                value={fromAccountNumber}
+                onChange={(e) => setFromAccountNumber(e.target.value)}
               >
-                <option value="" disabled selected>E.j: Mortgage</option>
+                {accounts.map(account => (
+                  <option key={account.id} value={account.number}>
+                    {account.number}
+                  </option>
+                ))}
               </select>
             </div>
-
-            <div className="mb-6 w-[80%] place-self-center">
-              <label htmlFor="accountOrigin" className="block text-sm font-medium">
-                Account Origin:
-              </label>
-              <select
-                id="accountOrigin"
-                name="accountOrigin"
-                className="mt-1 block w-full h-[40px] rounded-md bg-[#4a081f] text-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200 hover:scale-105"
-              >
-                <option value="" disabled selected>E.j: VIN-001</option>
-              </select>
-            </div>
-
-            <div className="mb-6  w-[80%] place-self-center">
-              <label htmlFor="amount" className="block text-sm font-medium">
-                Amount:
-              </label>
+            <div>
+              <p>Monto:</p>
               <input
-                type="number"
-                id="amount"
-                name="amount"
-                placeholder="E.j: $250,000.00"
-                className="mt-1 block w-full  h-[40px] rounded-md bg-[#4a081f] text-white border-gray-500 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200 hover:scale-105"
+                type='number'
+                className='bg-[#4a081f] text-white w-full p-2'
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
               />
             </div>
-
-            <div className="mb-6  w-[80%] place-self-center">
-              <label htmlFor="paymentType" className="block text-sm font-medium">
-                Payment:
-              </label>
-              <select
-                id="paymentType"
-                name="paymentType"
-                className="mt-1 block w-full  h-[40px] rounded-md bg-[#4a081f] text-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-all duration-200  hover:scale-105"
-              >
-                <option value="" disabled selected>E.j: 60 pays</option>
-              </select>
+            <div>
+              <p>Descripción:</p>
+              <input
+                type='text'
+                className='bg-[#4a081f] text-white w-full p-2'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </div>
-
-            <button
-              type="submit"
-              className="w-[50%] bg-indigo-600 place-self-center text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700 transition-all duration-200"
-            >
-              Apply Loan
-            </button>
+            <div>
+              <p>Cuenta de destino:</p>
+              <input
+                type='text'
+                className='bg-[#4a081f] text-white w-full p-2'
+                value={toAccountNumber}
+                onChange={(e) => setToAccountNumber(e.target.value)}
+              />
+            </div>
+            <div>
+              <button type="submit" className='bg-red-900 text-white p-2 mt-4 hover:bg-blue-700 hover:text-white'>
+                Transferir
+              </button>
+            </div>
           </form>
-        </div>
-
-        <div className="w-6/12 bg-black border p-4 flex justify-center items-center mr-5">
-          <img src="./assets/applyloan.png" alt="Apply Card" />
-        </div>
+          {message && <p>{message}</p>}
+        </section>
+        <section className='w-[40%]'>
+          <img src="/assets/finanzas.jpeg" alt="Transaction" />
+        </section>
       </div>
-</div>
+    </div>
   );
 };
 
-export default ApplyLoan;
+export default MakeTransaction;

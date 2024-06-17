@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import './CreditCard.css';
 
 const CreditCard = ({
-  color = '',
-  cardNumber = '1234 5678 9123 4567',
-  cardHolder = 'John Doe',
-  expirationDate = '12/24',
-  cvv = '123'
+  color,
+  cardNumber,
+  cardHolder,
+  expirationDate,
+  cvv
 }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -15,8 +15,8 @@ const CreditCard = ({
   };
 
   return (
-    <div className="credit-card-container flex justify-center items-center " onClick={handleFlip}>
-      <div className={`credit-card ${isFlipped ? 'flipped' : ''} `} style={{ backgroundColor: color }}>
+    <div className="credit-card-container flex justify-center items-center" onClick={handleFlip}>
+      <div className={`credit-card ${isFlipped ? 'flipped' : ''}`} style={{ backgroundColor: color }}>
         <div className="credit-card-front w-[500px]">
           <h3 className="text-lg font-bold text-white">Friends bank</h3>
           <div className="mt-5">

@@ -1,52 +1,68 @@
-import React, { useEffect, useState } from "react";
-import Title from "../components/Title";
-import CardAccount from "../components/CardAccount";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Card from '../components/Card';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-function Account() {
-  const [data, setData] = useState([]);
+const AccountComponent = () => {
+  const [accounts, setAccounts] = useState([]);
+  const token = useSelector(store => store.auth.token); // Accede al token desde el store
+  const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchAccounts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/clients/');
-        setData([response.data[0]]);
+        const response = await axios.get('http://localhost:8080/api/clients/current/accounts', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setAccounts(response.data);
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching accounts:', error);
       }
+    };
+
+    if (token) {
+      fetchAccounts();
     }
-    fetchData();
-  }, []);
+  }, [token]);
 
+const handleAccountClick = async (account) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/api/client/current/accounts/${account.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    const accountDetails = response.data;
+    const transactionsResponse = await axios.get(`http://localhost:8080/api/client/current/accounts/${account.id}/transactions`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    const transactions = transactionsResponse.data;
+    navigate('/account-details', { state: { account: accountDetails, transactions } });
+  } catch (error) {
+    console.error('Error fetching account details:', error);
+  }
+};
   return (
-    <div>
-      <Title text="Your selected account" />
-      <img src="/assets/finanzas.jpeg" style={{ width: "60%" }} className="mx-auto pb-16" alt="Selected account" />
-      <div className="w-[100%] relative pb-20">
-        <button className='border absolute left-32 top-2 border-black rounded-3xl w-[250px] h-[70px] place-self-center bg-[#4a081f] text-white font-custom transition duration-300 ease-in-out hover:bg-black'>
-          Request Account
-        </button>
+    <div className="container mx-auto mt-8 px-4">
+      <h2 className="text-2xl font-semibold mb-4">Your Accounts:</h2>
+      <div className="flex flex-wrap gap-4 items-center justify-around">
+        {accounts.map((account) => (
+          <Card
+            key={account.id}
+            accountNumber={account.number}
+            balance={`$${account.balance}`}
+            creationDate={`Creation Date: ${account.creationDate}`}
+            onClick={() => handleAccountClick(account)}
+          />
+        ))}
       </div>
-
-      {/* Renderizar las cuentas del primer cliente */}
-      {data.map((cliente, index) => (
-        <div key={index}>
-          <h2 className="text-2xl font-bold mt-2 mb-2 text-center">{cliente.firstName} {cliente.lastName}</h2>
-          <div className="flex justify-center gap-16 pb-10">
-          
-            {cliente.cuentas.map((cuenta) => (
-              <CardAccount
-                key={cuenta.id}
-                accountNumber={cuenta.numero}
-                amount={`$${cuenta.saldo}`}
-                creationDate={cuenta.fechaCreacion}
-              />
-            ))}
-          </div>
-        </div>
-      ))}
     </div>
   );
-}
+};
 
-export default Account;
+export default AccountComponent;
