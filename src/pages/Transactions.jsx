@@ -45,7 +45,7 @@ const MakeTransaction = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/api/transfer', transferData, {
+      const response = await axios.post('https://friendsbank.onrender.com/api/transfer', transferData, {
         headers: {
           Authorization: `Bearer ${token}`
         }

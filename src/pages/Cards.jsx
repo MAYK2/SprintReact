@@ -11,7 +11,7 @@ const Cards = () => {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/clients/current/cards', {
+        const response = await axios.get('https://friendsbank.onrender.com/api/clients/current/cards', {
           headers: {
             Authorization: `Bearer ${token}`
           }

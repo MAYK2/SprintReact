@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AccountDetails = ({ account, transactions }) => {
+const DetailsAccount = ({ account, transactions }) => {
   return (
     <div className="container mx-auto mt-8 px-4">
       <div className="mb-8">
@@ -43,4 +43,4 @@ const AccountDetails = ({ account, transactions }) => {
   );
 };
 
-export default AccountDetails;
+export default DetailsAccount;

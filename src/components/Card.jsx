@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 const Card = ({ accountNumber, balance, creationDate, account }) => {
   return (
     <div className="flex bg-black text-white italic p-4 ml-4 mb-8 border border-black rounded-lg w-[35%] h-[100%] items-center transition-transform hover:scale-105 relative">
-      <Link
+      {/* <Link
         to={{
-          pathname: "/account-selected",
+          pathname: "/details-account",
           state: { account }, // Pasar solo la cuenta como parte del estado
         }}
-      >
+      > */}
         <div className="flex mx-auto w-[85%] gap-16 flex-col">
           <div className="absolute top-3 right-5">
             <img src="./assets/lapiz.png" className="w-12" alt="Edit icon" />
@@ -26,7 +26,7 @@ const Card = ({ accountNumber, balance, creationDate, account }) => {
             <p className="text-3xl">{creationDate}</p>
           </div>
         </div>
-      </Link>
+      {/* </Link> */}
     </div>
   );
 };

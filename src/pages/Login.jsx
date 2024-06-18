@@ -14,9 +14,9 @@ export const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/login',{email, password});
+      const response = await axios.post('https://friendsbank.onrender.com/api/auth/login',{email, password});
       let token = response.data;
-      const responseCurrent = await axios.get("http://localhost:8080/api/auth/current", {
+      const responseCurrent = await axios.get("https://friendsbank.onrender.com/api/auth/current", {
         headers: {
           Authorization: `Bearer ${token}`
         }

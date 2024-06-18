@@ -9,9 +9,8 @@ import Loans from './pages/Loans';
 import { Login } from './pages/Login';
 import Register from './pages/Register';
 import { useSelector } from 'react-redux';
-import AccountDetails from './pages/accountDetails';
 import store from './redux/reducers/store';
-
+import DetailsAccount from './pages/DetailsAccount';
 
 const App = () => {
   const loggedIn = useSelector(store => store.auth.loggedIn);
@@ -27,7 +26,7 @@ const App = () => {
               <Route path="/apply-card" element={<ApplyCard />} />
               <Route path="/loans" element={<Loans />} />
               <Route path="/transactions" element={<Transactions />} />
-               <Route path="/account-details" element={<AccountDetails />} />
+              <Route path="/details-account/:id" element={<DetailsAccount />} />
             </>
           ) : (
             <>
@@ -35,7 +34,7 @@ const App = () => {
               <Route path="/login" element={<Login />} />
             </>
           )}
-       <Route path="*" element={<Login />} />
+       {/* <Route path="*" element={<Login />} /> */}
         </Routes>
       </MainLayout>
     </Router>
