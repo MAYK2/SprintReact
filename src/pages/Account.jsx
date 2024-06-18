@@ -18,7 +18,7 @@ const handleSelectedAccount = (id) => {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await axios.get('https://friendsbank.onrender.com/api/clients/current/accounts', {
+        const response = await axios.get('https://friendsbank-vb9w.onrender.com/api/clients/current/accounts', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -56,7 +56,7 @@ const handleSelectedAccount = (id) => {
 // };
   return (
     <div className="container mx-auto mt-8 px-4">
-      <h2 className="text-2xl font-semibold mb-4">Your Accounts:</h2>
+      <h2 className="text-2xl font-semibold pb-12 text-center">Your Accounts:</h2>
       <div className="flex flex-wrap gap-4 items-center justify-around">
         {accounts.map((account) => (
           <Card

@@ -30,7 +30,7 @@ const Cards = () => {
   const getColor = (cardColor) => {
   switch (cardColor) {
     case 'GOLD':
-      return '#FFD700'; // Amarillo dorado
+      return '#CCB300'; // Amarillo dorado
     case 'SILVER':
       return '#A9A9A9'; // Color platino
     case 'TITANIUM':
