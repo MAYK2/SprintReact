@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import { useSelector } from 'react-redux';
 import AccountDetails from './pages/DetailsAccount';
 import LoanList from './pages/LoanList';
+import Home from './pages/Home'; // Importa la página de bienvenida
 
 const App = () => {
   const loggedIn = useSelector(store => store.auth.loggedIn);
@@ -19,6 +20,7 @@ const App = () => {
     <Router>
       <MainLayout>
         <Routes>
+          <Route path="/" element={<Home />} /> {/* Ruta para la página de bienvenida */}
           {loggedIn ? (
             <>
               <Route path="/accounts" element={<Account />} />
@@ -28,7 +30,7 @@ const App = () => {
               <Route path="/transactions" element={<Transactions />} />
               {/* No deberías pasar accounts como prop aquí, ya que App no lo gestiona directamente */}
               <Route path="/details-account/:id" element={<AccountDetails />} />
-              <Route path='loan-list' element={<LoanList />} />
+              <Route path="/loan-list" element={<LoanList />} />
             </>
           ) : (
             <>
@@ -36,7 +38,8 @@ const App = () => {
               <Route path="/login" element={<Login />} />
             </>
           )}
-          <Route path="*" element={<Login />} />
+          {/* Ruta de fallback en caso de URL desconocida */}
+          <Route path="*" element={<Home />} />
         </Routes>
       </MainLayout>
     </Router>

@@ -10,7 +10,7 @@ const LoanList = () => {
   useEffect(() => {
     const fetchLoans = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/loans/', {
+        const response = await axios.get('https://friendsbank.onrender.com/api/loans/', {
           headers: {
             Authorization: `Bearer ${token}`
           }

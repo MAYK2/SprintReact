@@ -16,7 +16,7 @@ const MakeTransaction = () => {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/clients/current/accounts', {
+        const response = await axios.get('https://friendsbank.onrender.com/api/clients/current/accounts', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -47,7 +47,7 @@ const MakeTransaction = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/api/transfer', transferData, {
+      const response = await axios.post('https://friendsbank.onrender.com/api/transfer', transferData, {
         headers: {
           Authorization: `Bearer ${token}`
         }

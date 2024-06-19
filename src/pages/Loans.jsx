@@ -24,7 +24,7 @@ const ApplyLoan = () => {
   useEffect(() => {
     const fetchUserAccounts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/clients/current/accounts', {
+        const response = await axios.get('https://friendsbank.onrender.com/api/clients/current/accounts', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -71,7 +71,7 @@ const ApplyLoan = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/api/loans/apply', loanData, {
+      const response = await axios.post('https://friendsbank.onrender.com/api/loans/apply', loanData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
@@ -90,7 +90,7 @@ const ApplyLoan = () => {
     }
   };
   return (
-    <div>
+    <div className='pb-16'>
       <Title text="Apply for a loan" />
       <div className="flex justify-center pt-16 gap-10">
         <div className="w-6/12 bg-black border text-white p-4 flex flex-col justify-center ml-5">
@@ -188,8 +188,8 @@ const ApplyLoan = () => {
           </button>
         </div>
 
-        <div className="w-6/12 bg-black border p-4 flex justify-center items-center mr-5">
-          <img src="./assets/applyloan.png" alt="Apply Card" />
+        <div className="w-6/12 bg-black border p-4 flex justify-center items-center mr-5 ">
+          <img src="/assets/applyloan.png" alt="Apply Card" />
         </div>
       </div>
     </div>
