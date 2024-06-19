@@ -20,7 +20,7 @@ export const ApplyCard = () => {
     };
 
     try {
-      const response = await axios.post('https://friendsbank.onrender.com/api/clients/current/cards', formData, {
+      const response = await axios.post('http://localhost:8080/api/clients/current/cards', formData, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -93,4 +93,5 @@ export const ApplyCard = () => {
     </div>
   );
 };
+
 export default ApplyCard;

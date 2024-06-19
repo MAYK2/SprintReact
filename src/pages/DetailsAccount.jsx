@@ -1,46 +1,79 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import CardAccount from '../components/CardAccount'; // Asegúrate de que la ruta sea correcta según tu estructura de archivos
 
-const DetailsAccount = ({ account, transactions }) => {
+const AccountDetails = () => {
+  const [account, setAccount] = useState(null);
+  const { id } = useParams(); // Obtenemos el ID de los parámetros de la URL
+  const token = useSelector(store => store.auth.token);
+
+  useEffect(() => {
+    const fetchAccountDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/clients/current/accounts/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setAccount(response.data);
+      } catch (error) {
+        console.error('Error fetching account details:', error);
+      }
+    };
+
+    if (token) {
+      fetchAccountDetails();
+    }
+  }, [id, token]);
+
+  if (!account) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="container mx-auto mt-8 px-4">
-      <div className="mb-8">
-        <img src="/assets/finanzas.jpeg" alt="Account Image" className="w-full h-64 object-cover rounded" />
+      <div className='flex justify-center'>
+        <CardAccount
+          accountNumber={account.number}
+          amount={account.balance}
+          creationDate={account.creationDate}
+        />
       </div>
 
-      <div className="flex flex-col md:flex-row md:gap-8">
-        <div className="w-full md:w-1/2 mb-4 md:mb-0">
-          <h3 className="text-xl font-semibold mb-2">Selected Account</h3>
-          <div className="p-4 border rounded shadow">
-            <p>Account Number: {account.accountNumber}</p>
-            <p>Balance: ${account.balance}</p>
-            <p>Creation Date: {account.creationDate}</p>
-          </div>
-        </div>
-
-        <div className="w-full md:w-1/2">
-          <h3 className="text-xl font-semibold mb-2">Transactions</h3>
-          <table className="min-w-full bg-white border rounded shadow">
-            <thead>
+      <h3 className="text-xl font-semibold mb-4">Transactions:</h3>
+      
+      {account.transactions.length === 0 ? (
+        <div className="text-center text-gray-500">No transactions available.</div>
+      ) : (
+        <div className="transactions-table bg-black text-white rounded-lg overflow-hidden">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-black">
               <tr>
-                <th className="py-2 px-4 border-b">Date</th>
-                <th className="py-2 px-4 border-b">Description</th>
-                <th className="py-2 px-4 border-b">Amount</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Amount</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Description</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Type</th>
               </tr>
             </thead>
-            <tbody>
-              {transactions.map((transaction, index) => (
-                <tr key={index}>
-                  <td className="py-2 px-4 border-b">{transaction.date}</td>
-                  <td className="py-2 px-4 border-b">{transaction.description}</td>
-                  <td className="py-2 px-4 border-b">${transaction.amount}</td>
+            <tbody className="bg-black divide-y divide-gray-700">
+              {account.transactions.map((transaction) => (
+                <tr key={transaction.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{transaction.id}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">${transaction.amount}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{transaction.description}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{transaction.date}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{transaction.type}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
+      )}
     </div>
   );
 };
 
-export default DetailsAccount;
+export default AccountDetails;

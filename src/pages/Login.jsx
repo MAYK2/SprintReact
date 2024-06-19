@@ -11,21 +11,19 @@ export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-
   const handleLogin = async () => {
     try {
-      const response = await axios.post('https://friendsbank.onrender.com/api/auth/login',{email, password});
+      const response = await axios.post('http://localhost:8080/api/auth/login', { email, password });
       let token = response.data;
-      const responseCurrent = await axios.get("https://friendsbank.onrender.com/api/auth/current", {
+      const responseCurrent = await axios.get("http://localhost:8080/api/auth/current", {
         headers: {
           Authorization: `Bearer ${token}`
         }
-
-      })
+      });
       let client = responseCurrent.data;
       client.token = token;
       dispatch(login(client));
-      navigate('/accounts', { replace: true });;
+      navigate('/accounts', { replace: true });
     } catch (error) {
       console.error('Error during login:', error);
       // Aquí puedes manejar el error, por ejemplo, mostrar un mensaje al usuario.

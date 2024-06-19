@@ -1,7 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes , Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
-import Account from './pages/Account';
+import Account from './pages/Account'; // Asegúrate de importar Account
 import Cards from './pages/Cards';
 import ApplyCard from './pages/ApplyCard';
 import Transactions from './pages/Transactions';
@@ -9,8 +9,7 @@ import Loans from './pages/Loans';
 import { Login } from './pages/Login';
 import Register from './pages/Register';
 import { useSelector } from 'react-redux';
-import store from './redux/reducers/store';
-import DetailsAccount from './pages/DetailsAccount';
+import AccountDetails from './pages/DetailsAccount';
 
 const App = () => {
   const loggedIn = useSelector(store => store.auth.loggedIn);
@@ -26,7 +25,8 @@ const App = () => {
               <Route path="/apply-card" element={<ApplyCard />} />
               <Route path="/loans" element={<Loans />} />
               <Route path="/transactions" element={<Transactions />} />
-              <Route path="/details-account/:id" element={<DetailsAccount />} />
+              {/* No deberías pasar accounts como prop aquí, ya que App no lo gestiona directamente */}
+              <Route path="/details-account/:id" element={<AccountDetails />} />
             </>
           ) : (
             <>
@@ -34,7 +34,7 @@ const App = () => {
               <Route path="/login" element={<Login />} />
             </>
           )}
-       <Route path="*" element={<Login />} />
+          <Route path="*" element={<Login />} />
         </Routes>
       </MainLayout>
     </Router>

@@ -9,12 +9,14 @@ const MakeTransaction = () => {
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
+  const [destinationType, setDestinationType] = useState('propio'); // Estado para controlar el tipo de destino
+
   const token = useSelector(store => store.auth.token);
 
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await axios.get('https://friendsbank.onrender.com/api/clients/current/accounts', {
+        const response = await axios.get('http://localhost:8080/api/clients/current/accounts', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -45,15 +47,22 @@ const MakeTransaction = () => {
     };
 
     try {
-      const response = await axios.post('https://friendsbank.onrender.com/api/transfer', transferData, {
+      const response = await axios.post('http://localhost:8080/api/transfer', transferData, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       setMessage('Transferencia exitosa');
     } catch (error) {
-      setMessage('Transferencia fallida: ' + (error.response?.data || error.message));
+      setMessage((error.response?.data || error.message));
     }
+  };
+
+  // Función para manejar el cambio de tipo de destino
+  const handleDestinationTypeChange = (e) => {
+    setDestinationType(e.target.value);
+    // Reiniciar cuenta de destino al cambiar el tipo para evitar inconsistencias
+    setToAccountNumber('');
   };
 
   return (
@@ -65,11 +74,21 @@ const MakeTransaction = () => {
               <p>Tipo de destino:</p>
               <div className='flex gap-4'>
                 <label>Propio</label>
-                <input type='checkbox' className='w-6 h-6' />
+                <input
+                  type='radio'
+                  value='propio'
+                  checked={destinationType === 'propio'}
+                  onChange={handleDestinationTypeChange}
+                />
               </div>
               <div className='flex gap-4'>
                 <label>Otros</label>
-                <input type='checkbox' className='w-6 h-6' />
+                <input
+                  type='radio'
+                  value='otros'
+                  checked={destinationType === 'otros'}
+                  onChange={handleDestinationTypeChange}
+                />
               </div>
             </div>
             <div>
@@ -104,22 +123,39 @@ const MakeTransaction = () => {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
+            {destinationType === 'propio' ? (
+              <div>
+                <p>Cuenta de destino:</p>
+                <select
+                  className='bg-[#4a081f] text-white w-full p-2'
+                  value={toAccountNumber}
+                  onChange={(e) => setToAccountNumber(e.target.value)}
+                >
+                  {accounts.map(account => (
+                    <option key={account.id} value={account.number}>
+                      {account.number}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : (
+              <div>
+                <p>Cuenta de destino:</p>
+                <input
+                  type='text'
+                  className='bg-[#4a081f] text-white w-full p-2'
+                  value={toAccountNumber}
+                  onChange={(e) => setToAccountNumber(e.target.value)}
+                />
+              </div>
+            )}
             <div>
-              <p>Cuenta de destino:</p>
-              <input
-                type='text'
-                className='bg-[#4a081f] text-white w-full p-2'
-                value={toAccountNumber}
-                onChange={(e) => setToAccountNumber(e.target.value)}
-              />
-            </div>
-            <div>
-              <button type="submit" className='bg-red-900 text-white p-2 mt-4 hover:bg-blue-700 hover:text-white'>
+              <button type="submit" className='bg-red-900 text-white p-2 hover:bg-blue-700 hover:text-white'>
                 Transferir
               </button>
             </div>
           </form>
-          {message && <p>{message}</p>}
+          {message && <p className='text-white text-center text-xl'>{message}!</p>}
         </section>
         <section className='w-[40%]'>
           <img src="/assets/finanzas.jpeg" alt="Transaction" />
