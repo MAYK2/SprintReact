@@ -18,7 +18,6 @@ const AccountComponent = () => {
           }
         });
         setAccounts(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error('Error fetching accounts:', error);
       }
@@ -28,7 +27,6 @@ const AccountComponent = () => {
       fetchAccounts();
     }
   }, [token]);
-console.log(token);
   return (
     <div className="container mx-auto mt-8 px-4">
       <h2 className="text-2xl font-semibold mb-4">Your Accounts:</h2>

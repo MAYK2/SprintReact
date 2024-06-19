@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Title from '../components/Title';
+import { useNavigate } from 'react-router-dom';  
 
 const ApplyLoan = () => {
   const [loanType, setLoanType] = useState('');
@@ -10,6 +11,7 @@ const ApplyLoan = () => {
   const [paymentType, setPaymentType] = useState('');
   const [userAccounts, setUserAccounts] = useState([]);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const token = useSelector(store => store.auth.token);
 
@@ -49,6 +51,7 @@ const ApplyLoan = () => {
       fetchUserAccounts();
     }
   }, [token]);
+  console.log('Token:', token);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -86,7 +89,6 @@ const ApplyLoan = () => {
       setMessage('Hubo un error al enviar la solicitud de préstamo');
     }
   };
-
   return (
     <div>
       <Title text="Apply for a loan" />
@@ -178,6 +180,12 @@ const ApplyLoan = () => {
             </button>
           </form>
           {message && <p>{message}</p>}
+           <button
+            onClick={() => navigate('/loan-list')}
+            className="w-[50%] bg-indigo-600 place-self-center text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700 transition-all duration-200 mt-4"
+          >
+            Ver Préstamos disponibles
+          </button>
         </div>
 
         <div className="w-6/12 bg-black border p-4 flex justify-center items-center mr-5">
