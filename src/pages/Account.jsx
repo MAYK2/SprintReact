@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AccountComponent = () => {
   const [accounts, setAccounts] = useState([]);
+  const [isCreating, setIsCreating] = useState(false);
   const token = useSelector(store => store.auth.token);
   const navigate = useNavigate();
 
@@ -29,16 +30,20 @@ const AccountComponent = () => {
   }, [token]);
 
   const handleCreateAccount = async () => {
+    if (isCreating) return;
+    setIsCreating(true);
+
     try {
       await axios.post('https://friendsbank.onrender.com/api/clients/current/accounts', null, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      // Después de crear la cuenta, volver a obtener la lista actualizada
       fetchAccounts();
     } catch (error) {
       console.error('Error creating account:', error);
+    } finally {
+      setIsCreating(false);
     }
   };
 
@@ -49,12 +54,13 @@ const AccountComponent = () => {
         <button
           onClick={handleCreateAccount}
           className="bg-[#4a081f] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          disabled={isCreating}
         >
-          Create Account
+          {isCreating ? 'Creating...' : 'Create Account'}
         </button>
       </div>
       <div className="flex flex-wrap gap-4 items-center justify-around">
-        {accounts.map((account) => (
+        {accounts.slice(0, 3).map((account) => (
           <Card
             key={account.id}
             accountNumber={account.number}

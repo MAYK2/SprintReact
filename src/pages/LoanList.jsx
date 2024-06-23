@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Title from '../components/Title';
 
 const LoanList = () => {
   const [loans, setLoans] = useState([]);
-  const token = useSelector(state => state.auth.token);
+  const token = useSelector(store => store.auth.token);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLoans = async () => {
       try {
         const response = await axios.get('https://friendsbank.onrender.com/api/loans/', {
-          headers: {
+              headers: {
             Authorization: `Bearer ${token}`
           }
         });
@@ -33,6 +35,10 @@ const LoanList = () => {
     }
   }, [token]);
 
+  const handleViewMyLoans = () => {
+    navigate('/My-loans');
+  };
+
   return (
     <div className="bg-black text-white p-28 rounded-md mx-auto max-w-4xl font-custom text-center ">
       <h1 className='text-3xl font-bold mb-4 text-center text-white'>PRESTAMOS DISPONIBLES</h1>
@@ -45,6 +51,12 @@ const LoanList = () => {
           </div>
         ))}
       </div>
+      <button
+        onClick={handleViewMyLoans}
+        className="bg-[#4a081f] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+      >
+        View My Loans
+      </button>
     </div>
   );
 };

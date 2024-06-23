@@ -11,7 +11,8 @@ import Register from './pages/Register';
 import { useSelector } from 'react-redux';
 import AccountDetails from './pages/DetailsAccount';
 import LoanList from './pages/LoanList';
-import Home from './pages/Home'; // Importa la página de bienvenida
+import Home from './pages/Home'; 
+import MyLoans from './pages/MyLoans'; 
 
 const App = () => {
   const loggedIn = useSelector(store => store.auth.loggedIn);
@@ -31,6 +32,7 @@ const App = () => {
               {/* No deberías pasar accounts como prop aquí, ya que App no lo gestiona directamente */}
               <Route path="/details-account/:id" element={<AccountDetails />} />
               <Route path="/loan-list" element={<LoanList />} />
+              <Route path='My-loans' element={<MyLoans />} />
             </>
           ) : (
             <>

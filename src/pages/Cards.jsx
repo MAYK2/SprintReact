@@ -41,13 +41,13 @@ const Cards = () => {
 };
 
 
- const creditCards = cards.filter(card => card.type === 'CREDIT');
+const creditCards = cards.filter(card => card.type === 'CREDIT');
 const debitCards = cards.filter(card => card.type === 'DEBIT');
 
 return (
   <div className="p-4 flex gap-16 flex-col mt-10">
     <section className="mb-8 flex justify-center flex-col items-center">
-      <h2 className="text-2xl font-bold mb-4">Tarjetas de Crédito</h2>
+      <h2 className="text-2xl font-bold mb-4">Credit Cards</h2>
       {creditCards.length > 0 ? (
         <div className="flex gap-32">
           {creditCards.map(card => (
@@ -66,7 +66,7 @@ return (
       )}
     </section>
     <section className='flex justify-center flex-col items-center'>
-      <h2 className="text-2xl font-bold mb-4">Tarjetas de Débito</h2>
+      <h2 className="text-2xl font-bold mb-4">Debit Cards</h2>
       {debitCards.length > 0 ? (
         <div className="flex gap-32">
           {debitCards.map(card => (

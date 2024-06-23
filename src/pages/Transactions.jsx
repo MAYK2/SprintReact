@@ -71,9 +71,9 @@ const MakeTransaction = () => {
         <section className='bg-black text-white w-[40%] h-[500px] mt-[50px] pr-16 font-custom'>
           <form className='flex flex-col gap-12 pl-10' onSubmit={handleTransfer}>
             <div className='flex justify-around pt-4'>
-              <p>Tipo de destino:</p>
+              <p>Destination Type:</p>
               <div className='flex gap-4'>
-                <label>Propio</label>
+                <label>own</label>
                 <input
                   type='radio'
                   value='propio'
@@ -82,7 +82,7 @@ const MakeTransaction = () => {
                 />
               </div>
               <div className='flex gap-4'>
-                <label>Otros</label>
+                <label>Others</label>
                 <input
                   type='radio'
                   value='otros'
@@ -92,7 +92,7 @@ const MakeTransaction = () => {
               </div>
             </div>
             <div>
-              <p>Cuenta de origen:</p>
+              <p>Origin Account:</p>
               <select
                 className='bg-[#4a081f] w-full p-2'
                 value={fromAccountNumber}
@@ -106,7 +106,7 @@ const MakeTransaction = () => {
               </select>
             </div>
             <div>
-              <p>Monto:</p>
+              <p>Amount:</p>
               <input
                 type='number'
                 className='bg-[#4a081f] text-white w-full p-2'
@@ -115,7 +115,7 @@ const MakeTransaction = () => {
               />
             </div>
             <div>
-              <p>Descripción:</p>
+              <p>Description:</p>
               <input
                 type='text'
                 className='bg-[#4a081f] text-white w-full p-2'
@@ -125,7 +125,7 @@ const MakeTransaction = () => {
             </div>
             {destinationType === 'propio' ? (
               <div>
-                <p>Cuenta de destino:</p>
+                <p>Account destination:</p>
                 <select
                   className='bg-[#4a081f] text-white w-full p-2'
                   value={toAccountNumber}
@@ -140,7 +140,7 @@ const MakeTransaction = () => {
               </div>
             ) : (
               <div>
-                <p>Cuenta de destino:</p>
+                <p>Account destination:</p>
                 <input
                   type='text'
                   className='bg-[#4a081f] text-white w-full p-2'
@@ -151,7 +151,7 @@ const MakeTransaction = () => {
             )}
             <div>
               <button type="submit" className='bg-red-900 text-white p-2 hover:bg-blue-700 hover:text-white'>
-                Transferir
+                Transfer
               </button>
             </div>
           </form>
